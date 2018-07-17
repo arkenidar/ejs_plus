@@ -1,0 +1,32 @@
+<!doctype html>
+<script src="https://github.com/mde/ejs/releases/download/v2.5.8/ejs.min.js"></script>
+<script>
+function ul_tag(array){
+	var template_ejs=`<%
+	function listing(array){
+	  %>
+	  <ul>
+	  <%
+	  for(var i of array.keys()) {
+	  %>
+	   <li><%= array[i] %></li>
+	  <%
+	  }
+	  %>
+	  </ul>
+	  <%
+	}
+	%>
+	<% listing(array); %>`
+
+	var html=ejs.render(template_ejs,{array})
+	document.write(html)
+}
+</script>
+<script>
+function main(){
+ul_tag([1,2,3])
+ul_tag(['a','b','c'])
+}
+main()
+</script>
