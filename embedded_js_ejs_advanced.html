@@ -1,56 +1,16 @@
 <!doctype html>
 <head>
-
 <title>ejs plus</title>
 <meta charset="utf-8">
-
 <script src="ejs.min.js"></script>
+<script src="ejs_plus.js"></script>
+<script src="ejs_price.js"></script>
 
-<script>
-function parse_ejs_tag(selector){
-	for(var element of document.querySelectorAll(selector))
-		element.insertAdjacentHTML('afterend', eval(element.innerText))
-}
-document.addEventListener("DOMContentLoaded", function(event) {
-	console.log("DOM fully loaded and parsed")
-	parse_ejs_tag('.ejs')
-})
-</script>
-
-<script id="ejs_price_js">
-function price(product,price){
-	var template_ejs=`<div><%= product %>: <%= format_price(price) %></div>`
-	return ejs.render(template_ejs,{product,price})
-}
-function format_price(price){    
-	var dplaces = price == parseInt(price, 10) ? 0 : 2
-	price = '$' + price.toFixed(dplaces)
-	return price
-}
-</script>
-
-<script id="ejs_array_js">
-function ul_tag(array){
-	var template_ejs=
-	`<ul>
-	<%
-	for(var i of array.keys()) {
-	%>
-		<li><%= array[i] %></li>
-	<%
-	}
-	%>
-	</ul>`
-	return ejs.render(template_ejs,{array})
-}
-</script>
-
+<script src="ejs_array.js"></script>
 </head>
 <body>
-
 <script class="ejs">price('product1', 0.5)</script>
 <script class="ejs">ul_tag([10,20,30])</script>
 <script class="ejs">price('product2', 180.4)</script>
 <script class="ejs">ul_tag(['aaa','bbb','ccc'])</script>
-
 </body>
