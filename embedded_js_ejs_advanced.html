@@ -1,13 +1,12 @@
 <!doctype html>
 <head>
+
 <title>ejs plus</title>
 <meta charset="utf-8">
-<!-- <script src="https://github.com/mde/ejs/releases/download/v2.5.8/ejs.min.js"></script> -->
+
 <script src="ejs.min.js"></script>
+
 <script>
-function get_template(selector){
-	return document.querySelector(selector).innerText
-}
 function parse_ejs_tag(selector){
 	for(var element of document.querySelectorAll(selector))
 		element.insertAdjacentHTML('afterend', eval(element.innerText))
@@ -17,15 +16,11 @@ document.addEventListener("DOMContentLoaded", function(event) {
 	parse_ejs_tag('.ejs')
 })
 </script>
-<!---------------------------->
-<script id="ejs_price" type="text/ejs">
-<div><%= product %>: <%= format_price(price) %></div>
-</script>
+
 <script id="ejs_price_js">
 function price(product,price){
-	var template_ejs=get_template('#ejs_price')
-	var html=ejs.render(template_ejs,{product,price})
-	return html
+	var template_ejs=`<div><%= product %>: <%= format_price(price) %></div>`
+	return ejs.render(template_ejs,{product,price})
 }
 function format_price(price){    
 	var dplaces = price == parseInt(price, 10) ? 0 : 2
@@ -34,10 +29,10 @@ function format_price(price){
 }
 </script>
 
-<!---------------------------->
-
-<script id="ejs_array" type="text/ejs">
-<ul>
+<script id="ejs_array_js">
+function ul_tag(array){
+	var template_ejs=
+	`<ul>
 	<%
 	for(var i of array.keys()) {
 	%>
@@ -45,19 +40,17 @@ function format_price(price){
 	<%
 	}
 	%>
-</ul>
-</script>
-<script id="ejs_array_js">
-function ul_tag(array){
-	var template_ejs=get_template('#ejs_array')
-	var html=ejs.render(template_ejs,{array})
-	return html
+	</ul>`
+	return ejs.render(template_ejs,{array})
 }
 </script>
+
 </head>
 <body>
+
 <script class="ejs">price('product1', 0.5)</script>
 <script class="ejs">ul_tag([10,20,30])</script>
 <script class="ejs">price('product2', 180.4)</script>
 <script class="ejs">ul_tag(['aaa','bbb','ccc'])</script>
+
 </body>
